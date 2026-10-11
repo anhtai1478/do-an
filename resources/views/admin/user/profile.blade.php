@@ -77,47 +77,49 @@
         <div class="col-lg-8 col-xlg-9 col-md-7">
             <div class="card">
                 <div class="card-body">
-                    <form class="form-horizontal form-material" action="" method="POST">
+                    <form class="form-horizontal form-material" action="{{ route('admin.profile.update') }}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label class="col-md-12">Full Name</label>
                             <div class="col-md-12">
-                                <input type="text" placeholder="Johnathan Doe" class="form-control form-control-line">
+                                <input type="text" placeholder="Johnathan Doe" class="form-control form-control-line" name="name" value="{{ old('name', $user->name) }}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="example-email" class="col-md-12">Email</label>
                             <div class="col-md-12">
-                                <input type="email" placeholder="johnathan@admin.com" class="form-control form-control-line" name="example-email" id="example-email">
+                                <input type="email" placeholder="johnathan@admin.com" class="form-control form-control-line" name="email" id="example-email" value="{{ old('email', $user->email) }}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12">Password</label>
                             <div class="col-md-12">
-                                <input type="password" value="password" class="form-control form-control-line">
+                                <input type="password" placeholder="Enter new password" class="form-control form-control-line" name="password">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12">Phone No</label>
                             <div class="col-md-12">
-                                <input type="text" placeholder="123 456 7890" class="form-control form-control-line">
+                                <input type="text" placeholder="123 456 7890" class="form-control form-control-line" name="phone" value="{{ old('phone', $user->phone) }}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12">Message</label>
                             <div class="col-md-12">
-                                <textarea rows="5" class="form-control form-control-line"></textarea>
+                                <textarea rows="5" class="form-control form-control-line" name="message">{{ old('message', $user->message) }}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-12">Select Country</label>
                             <div class="col-sm-12">
-                                <select class="form-control form-control-line">
-                                    <option>London</option>
-                                    <option>India</option>
-                                    <option>Usa</option>
-                                    <option>Canada</option>
-                                    <option>Thailand</option>
+                                <select class="form-control form-control-line" name="id_country">
+                                    <option value="">Select a country</option>
+                                    <option value="1" {{ old('id_country', $user->id_country) == 1 ? 'selected' : '' }}>London</option>
+                                    <option value="2" {{ old('id_country', $user->id_country) == 2 ? 'selected' : '' }}>India</option>
+                                    <option value="3" {{ old('id_country', $user->id_country) == 3 ? 'selected' : '' }}>Usa</option>
+                                    <option value="4" {{ old('id_country', $user->id_country) == 4 ? 'selected' : '' }}>Canada</option>
+                                    <option value="5" {{ old('id_country', $user->id_country) == 5 ? 'selected' : '' }}>Thailand</option>
+                                    <option value="6" {{ old('id_country', $user->id_country) == 6 ? 'selected' : '' }}>Vietnam</option>
                                 </select>
                             </div>
                         </div>
