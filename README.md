@@ -21,6 +21,22 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
+## Fixing XAMPP PHP extensions on Windows
+
+If phpMyAdmin reports that the `mysqli` extension is missing, run
+[`scripts/fix-xampp-php.ps1`](scripts/fix-xampp-php.ps1) from an elevated
+PowerShell after stopping Apache in the XAMPP Control Panel:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\fix-xampp-php.ps1
+```
+
+For XAMPP installed outside `C:\xampp`, pass its directory with
+`-XamppPath`, for example `-XamppPath D:\xampp`. The script enables
+`mysqli` and `pdo_mysql`, sets the PHP extension directory, and synchronizes
+Apache's `libssh2.dll` with the PHP copy when they differ. It creates backups
+beside modified files. Start Apache again after the script completes.
+
 ## Learning Laravel
 
 Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
