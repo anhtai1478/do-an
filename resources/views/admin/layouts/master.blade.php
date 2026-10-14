@@ -44,6 +44,7 @@
     <script src="{{ asset('admin/assets/libs/chartist/dist/chartist.min.js') }}"></script>
     <script src="{{ asset('admin/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js') }}"></script>
     <script src="{{ asset('admin/dist/js/pages/dashboards/dashboard1.js') }}"></script>
+    @stack('scripts')
 </body>
 
 </html>

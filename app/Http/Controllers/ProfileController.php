@@ -2,51 +2,42 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use RuntimeException;
 
 class ProfileController extends Controller
 {
     //
     public function update(UpdateProfileRequest $request)
     {
-        $userId = auth()->id(); // Lấy ID của người dùng hiện tại
+        $user = User::findOrFail($request->user()->id);
+        $data = $request->safe()->except(['avatar', 'password']);
 
-        //lấy tất cả thông tin user có id = $userId
-        $user = User::findOrFail($userId);
-        $data = $request->all();
-
-        $file = $request->avatar;
-
-        if (!empty($file)) {
-
-            $data['avatar'] = $file->getClientOriginalName();
+        if ($request->filled('password')) {
+            $data['password'] = $request->validated('password');
         }
 
-        if($data['password'])
-            {
+        if ($request->hasFile('avatar')) {
+            $avatarPath = $request->file('avatar')->store('upload/user/avatar', 'public');
 
-                $data['password'] = bcrypt($data['password']);
-            }
-            else
-            {
-                $data['password'] = $user->password;
+            if (! $avatarPath) {
+                throw new RuntimeException('Unable to store the uploaded avatar.');
             }
 
-            if($user -> update($data)){
+            $data['avatar'] = $avatarPath;
+        }
 
-            if(!empty($file))
-                {
-                    $file -> move ('upload/user/avatar', $file->getClientOriginalName());
+        $user->update($data);
 
-                }
-                return redirect()->back()->with('success', 'Cập nhật thông tin thành công');
+        return redirect()->back()->with('success', 'Cập nhật thông tin thành công');
+    }
 
-            }else{
-                return redirect()->back()->with('error', 'Cập nhật thông tin thất bại');
-            }
-
-
+    public function editCountry($id)
+    {
+        $country = Country::findOrFail($id);
+        return view ('admin.country.edit', compact('country'));
     }
 }
