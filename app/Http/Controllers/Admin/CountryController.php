@@ -17,10 +17,10 @@ class CountryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:countries,name',
+            'name' => 'required|string|max:255',
 
         ]);
-        Country::create(request()->all());
+        Country::create($request->all());
         return redirect()
         ->route('admin.country.index')
         ->with('success', 'thêm quốc gia thành công.');
@@ -32,7 +32,7 @@ class CountryController extends Controller
         return view('admin.country.edit', compact('country'));
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
         $country = Country::findOrFail($id);
         $country->delete();

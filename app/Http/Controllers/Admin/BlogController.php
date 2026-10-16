@@ -30,14 +30,15 @@ class BlogController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('blogs', 'public');
+            $data['image'] = $request->file('image')
+                ->store('blogs', 'public');
         }
 
         Blog::create($data);
 
         return redirect()
             ->route('admin.blogs.index')
-            ->with('success', 'Blog created successfully.');
+            ->with('success', 'Đăng bài viết thành công!');
     }
 
 
@@ -47,7 +48,7 @@ class BlogController extends Controller
         return view('admin.blogs.edit', compact('blog'));
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
         $blog = Blog::findOrFail($id);
         $blog->delete();
@@ -69,13 +70,14 @@ class BlogController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('blogs', 'public');
+            $data['image'] = $request->file('image')
+                ->store('blogs', 'public');
         }
 
         $blog->update($data);
 
         return redirect()
             ->route('admin.blogs.index')
-            ->with('success', 'Blog updated successfully.');
+            ->with('success', 'Cập nhật bài viết thành công!');
     }
 }
