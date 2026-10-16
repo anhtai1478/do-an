@@ -47,10 +47,10 @@
                                         Edit
                                     </a>
 
-                                    <form action="{{ route('admin.blogs.destroy', $item->id) }}"
+                                    <form action="{{ route('admin.blogs.delete', $item->id) }}"
                                           method="POST"
                                           class="d-inline"
-                                          onsubmit="return confirm('Bạn có chắc muốn xóa bài viết này?')">
+                                          >
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>

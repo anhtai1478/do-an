@@ -22,13 +22,10 @@
                         id="title"
                         type="text"
                         name="title"
-                        class="form-control @error('title') is-invalid @enderror"
+                        class="form-control"
                         value="{{ old('title', $blog->title) }}"
                         required
                     >
-                    @error('title')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
                 </div>
 
                 <div class="form-group">
@@ -47,13 +44,10 @@
                         id="image"
                         type="file"
                         name="image"
-                        class="form-control @error('image') is-invalid @enderror"
+                        class="form-control"
                         accept="image/*"
                     >
                     <small>Để trống nếu muốn giữ ảnh hiện tại.</small>
-                    @error('image')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
                 </div>
 
                 <div class="form-group">
@@ -62,11 +56,8 @@
                         id="description"
                         name="description"
                         rows="3"
-                        class="form-control @error('description') is-invalid @enderror"
+                        class="form-control"
                     >{{ old('description', $blog->description) }}</textarea>
-                    @error('description')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
                 </div>
 
                 <div class="form-group">
@@ -75,14 +66,11 @@
                         id="content"
                         name="content"
                         rows="10"
-                        class="form-control @error('content') is-invalid @enderror"
+                        class="form-control"
                     >{{ old('content', $blog->content) }}</textarea>
-                    @error('content')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
                 </div>
 
-                <button type="submit" class="btn btn-success">Save Changes</button>
+                <button type="submit" class="btn btn-success">Save</button>
                 <a href="{{ route('admin.blogs.index') }}" class="btn btn-secondary">Back</a>
             </form>
         </div>

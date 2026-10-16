@@ -35,8 +35,7 @@
                                     <td>{{ $country->id }}</td>
                                     <td>{{ $country->name }}</td>
                                     <td class="text-end">
-                                        <!-- Form Xóa (Delete) -->
-                                        <form action="{{ route('admin.country.destroy', $country->id) }}" method="POST" style="display:inline-block;" onsubmit="return confirm('Bạn có chắc chắn muốn xóa?');">
+                                        <form action="{{ route('admin.country.delete', $country->id) }}" method="POST"  onsubmit="return confirm('Bạn có chắc chắn muốn xóa?');">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>
