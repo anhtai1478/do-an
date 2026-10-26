@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -34,5 +35,15 @@ class User extends Authenticatable
     public function country(): BelongsTo
     {
         return $this->belongsTo(Country::class, 'id_country');
+    }
+
+    public function blogRatings(): HasMany
+    {
+        return $this->hasMany(BlogRating::class);
+    }
+
+    public function blogComments(): HasMany
+    {
+        return $this ->hasMany(BlogComment::class);
     }
 }
