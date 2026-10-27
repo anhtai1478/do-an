@@ -59,11 +59,20 @@
 					<div class="col-md-8 clearfix">
 						<div class="shop-menu clearfix pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href=""><i class="fa fa-user"></i> Account</a></li>
+								@auth
+									<li><a href="{{ route('account.edit') }}"><i class="fa fa-user"></i> Account</a></li>
+									<li>
+										<form class="shop-menu-logout-form" method="POST" action="{{ route('logout') }}">
+											@csrf
+											<button type="submit" class="shop-menu-logout"><i class="fa fa-unlock"></i> Logout</button>
+										</form>
+									</li>
+								@else
+									<li><a href="{{ route('login') }}"><i class="fa fa-lock"></i> Login</a></li>
+								@endauth
 								<li><a href=""><i class="fa fa-star"></i> Wishlist</a></li>
 								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
 								<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-								<li><a href="{{ route('login') }}"><i class="fa fa-lock"></i> Login</a></li>
 							</ul>
 						</div>
 					</div>

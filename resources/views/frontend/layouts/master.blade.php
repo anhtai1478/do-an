@@ -7,7 +7,12 @@
     <title>@yield('title', 'Shop Bán Hàng')</title>
 
     <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/prettyPhoto.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/price-range.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/animate.css') }}">
     <link rel="stylesheet" href="{{ asset('frontend/css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/responsive.css') }}">
     @yield('css')
 </head>
 <body>

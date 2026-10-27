@@ -208,11 +208,27 @@ a#scrollUp i {
     margin-top: 10px;
 }
 
-.shop-menu ul li a i {
+.shop-menu ul li .shop-menu-logout {
+    display: block;
+    background: #FFFFFF;
+    border: 0;
+    color: #696763;
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 20px;
+    margin-top: 10px;
+    padding: 0;
+}
+
+.shop-menu ul li a i,
+.shop-menu ul li .shop-menu-logout i {
     margin-right: 3px;
 }
 
-.shop-menu ul li a:hover {
+.shop-menu ul li a:hover,
+.shop-menu ul li .shop-menu-logout:hover {
     color: #fe980f;
     background: #fff;
 }
@@ -1462,6 +1478,22 @@ h2.title {
 .signup-form form textarea {
     height: 150px;
 }
+
+.signup-form form .account-product-discount {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.signup-form form .account-product-discount input {
+    margin-bottom: 0;
+    max-width: 140px;
+}
+
+.signup-form form .account-product-discount span {
+    color: #696763;
+}
+
 .login-form form span {
     line-height: 25px;
 }
@@ -1586,6 +1618,72 @@ h2.title {
 
 #cart_items .cart_info .image {
     padding-left: 30px;
+}
+
+#cart_items .cart_info .account-products-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+#cart_items .cart_info .account-products-image-column {
+    width: 25%;
+}
+
+#cart_items .cart_info .account-products-name-column {
+    width: 17.5%;
+}
+
+#cart_items .cart_info .account-products-price-column {
+    width: 30%;
+}
+
+#cart_items .cart_info .account-products-action-column {
+    width: 27.5%;
+}
+
+#cart_items .cart_info .account-products-table .cart_product {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#cart_items .cart_info .account-products-table .account-products-action-cell {
+    vertical-align: middle;
+}
+
+#cart_items .cart_info .account-products-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+#cart_items .cart_info .account-products-delete-form {
+    display: inline-flex;
+    margin: 0;
+}
+
+#cart_items .cart_info .account-products-actions .btn {
+    margin: 0;
+}
+
+#cart_items .cart_info .account-products-original-price {
+    color: #999;
+    font-size: 14px;
+    margin-bottom: 2px;
+    text-decoration: line-through;
+}
+
+#cart_items .cart_info .account-products-discount {
+    color: #e74c3c;
+    font-size: 13px;
+    margin-bottom: 2px;
+}
+
+#cart_items .cart_info .account-products-sale-price {
+    color: #FE980F;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 0;
 }
 
 #cart_items .cart_info .cart_description h4 {

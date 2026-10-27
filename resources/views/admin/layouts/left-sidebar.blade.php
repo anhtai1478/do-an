@@ -28,7 +28,7 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('admin.blogs.index') }}"
                         aria-expanded="false">
-                        <i class="mdi mdi-post"></i>
+                        <i class="mdi mdi-book"></i>
                         <span class="hide-menu">Blog</span>
                     </a>
                 </li>
