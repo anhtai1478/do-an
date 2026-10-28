@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
+use Illuminate\Validation\ValidationException;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
@@ -55,24 +57,42 @@ class AccountProductController extends Controller
         ]);
     }
 
+
     public function update(UpdateProductRequest $request, int $product): RedirectResponse
     {
         $product = $this->findUserProduct($request, $product);
         $validated = $request->validated();
+
         $uploadedImages = $validated['images'] ?? [];
-        unset($validated['images']);
+        $imagesToDelete = $validated['delete_images'] ?? [];
+
+        unset($validated['images'], $validated['delete_images']);
 
         $oldImages = $product->imagePaths();
+        $invalidImages = array_diff($imagesToDelete, $oldImages);
 
-        if ($uploadedImages !== []) {
-            $validated['image'] = $this->storeImages($uploadedImages, (int) $request->user()->id);
+        if ($invalidImages !== []) {
+            throw ValidationException::withMessages([
+                'delete_images' => 'Có ảnh được chọn không thuộc sản phẩm này.',
+            ]);
         }
 
+        $remainingImages = array_values(array_diff($oldImages, $imagesToDelete));
+
+        if (count($remainingImages) + count($uploadedImages) > 3) {
+            throw ValidationException::withMessages([
+                'images' => 'Tổng số ảnh của sản phẩm không được vượt quá 3.',
+            ]);
+        }
+
+        $newImages = $uploadedImages !== []
+            ? $this->storeImages($uploadedImages, (int) $request->user()->id)
+            : [];
+
+        $validated['image'] = array_merge($remainingImages, $newImages);
         $product->update($validated);
 
-        if ($uploadedImages !== []) {
-            $this->deleteStoredImages($oldImages, (int) $request->user()->id);
-        }
+        $this->deleteStoredImages($imagesToDelete, (int) $request->user()->id);
 
         return redirect()->route('account.my-product')->with('success', 'Cập nhật sản phẩm thành công.');
     }
@@ -100,10 +120,10 @@ class AccountProductController extends Controller
         $paths = [];
 
         foreach ($uploadedImages as $uploadedImage) {
-            $path = $uploadedImage->store('products/'.$userId, 'public');
+            $path = $uploadedImage->store('products/' . $userId, 'public');
 
             if ($path === false) {
-                if ($paths !== [] && ! Storage::disk('public')->delete($paths)) {
+                if ($paths !== [] && !Storage::disk('public')->delete($paths)) {
                     throw new RuntimeException('Unable to clean up product images after a failed upload.');
                 }
 
@@ -123,11 +143,11 @@ class AccountProductController extends Controller
     {
         $ownedImagePaths = array_values(array_filter(
             $imagePaths,
-            fn (string $path): bool => str_starts_with($path, 'products/'.$userId.'/')
-                && ! str_contains($path, '..'),
+            fn(string $path): bool => str_starts_with($path, 'products/' . $userId . '/')
+                && !str_contains($path, '..'),
         ));
 
-        if ($ownedImagePaths !== [] && ! Storage::disk('public')->delete($ownedImagePaths)) {
+        if ($ownedImagePaths !== [] && !Storage::disk('public')->delete($ownedImagePaths)) {
             throw new RuntimeException('Unable to delete product images.');
         }
     }

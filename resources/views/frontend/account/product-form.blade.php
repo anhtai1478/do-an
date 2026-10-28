@@ -23,8 +23,8 @@
 
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input id="name" name="name" type="text" class="form-control"
-                        value="{{ old('name', $product->name) }}" required maxlength="255">
+                    <input id="name" name="name" type="text" class="form-control" value="{{ old('name', $product->name) }}"
+                        required maxlength="255">
                     @error('name')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -56,9 +56,8 @@
 
                 <div class="form-group">
                     <label for="brand">Brand</label>
-                    <input id="brand" name="brand" type="text" list="product-brands"
-                        placeholder="Please choose brand" value="{{ old('brand', $product->brand) }}"
-                        maxlength="255">
+                    <input id="brand" name="brand" type="text" list="product-brands" placeholder="Please choose brand"
+                        value="{{ old('brand', $product->brand) }}" maxlength="255">
                     <datalist id="product-brands">
                         @foreach ($brands as $brand)
                             <option value="{{ $brand }}">
@@ -87,8 +86,8 @@
                 <div class="form-group">
                     <label for="discount_percent">Discount</label>
                     <div class="account-product-discount">
-                        <input id="discount_percent" name="discount_percent" type="number" min="0" max="100"
-                            step="1" value="{{ old('discount_percent', $product->discount_percent ?? 0) }}">
+                        <input id="discount_percent" name="discount_percent" type="number" min="0" max="100" step="1"
+                            value="{{ old('discount_percent', $product->discount_percent ?? 0) }}">
                         <span>%</span>
                     </div>
                     @error('discount_percent')
@@ -107,11 +106,20 @@
 
                 @if ($product->exists && $product->imagePaths() !== [])
                     <div class="form-group">
-                        <label>Current images</label>
+                        <label>Ảnh hiện tại</label>
+
                         <div>
                             @foreach ($product->imagePaths() as $imagePath)
-                                <img src="{{ asset('storage/' . $imagePath) }}" alt="{{ $product->name }}"
-                                    width="80" height="80" style="object-fit: cover; margin-right: 8px">
+                                <div style="display: inline-block; margin-right: 12px; vertical-align: top">
+                                    <img src="{{ asset('storage/' . $imagePath) }}" alt="{{ $product->name }}" width="80"
+                                        height="80" style="object-fit: cover; display: block">
+
+                                    <label>
+                                        <input type="checkbox" name="delete_images[]" value="{{ $imagePath }}"
+                                            @checked(in_array($imagePath, old('delete_images', []), true))>
+                                        Xóa ảnh này
+                                    </label>
+                                </div>
                             @endforeach
                         </div>
                     </div>
@@ -139,8 +147,8 @@
 
                 <div class="form-group">
                     <label for="description">Detail</label>
-                    <textarea id="description" name="description" class="form-control" rows="5"
-                        placeholder="Detail" maxlength="5000">{{ old('description', $product->description) }}</textarea>
+                    <textarea id="description" name="description" class="form-control" rows="5" placeholder="Detail"
+                        maxlength="5000">{{ old('description', $product->description) }}</textarea>
                     @error('description')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
