@@ -50,9 +50,14 @@ class AccountProductController extends Controller
     public function edit(Request $request, int $product): View
     {
         return view('frontend.account.product-form', [
+            // Lấy sản phẩm thuộc tài khoản đang đăng nhập để hiển thị trên form sửa.
             'product' => $this->findUserProduct($request, $product),
+            // Tiêu đề được truyền sang view để phân biệt form sửa sản phẩm.
             'title' => 'Edit Product',
+            // Lấy danh sách danh mục hiện có, không trùng và sắp xếp theo tên.
             'categories' => Product::query()->whereNotNull('category')->distinct()->orderBy('category')->pluck('category'),
+            // Lấy danh sách thương hiệu hiện có, không trùng và sắp xếp theo tên.
+            // distinct() để loại bỏ các giá trị trùng lặp, orderBy('brand') để sắp xếp theo tên thương hiệu.
             'brands' => Product::query()->whereNotNull('brand')->distinct()->orderBy('brand')->pluck('brand'),
         ]);
     }
@@ -61,33 +66,36 @@ class AccountProductController extends Controller
     public function update(UpdateProductRequest $request, int $product): RedirectResponse
     {
         $product = $this->findUserProduct($request, $product);
+        // Lấy dữ liệu đã được xác thực từ request.
         $validated = $request->validated();
 
+        // Lấy danh sách ảnh mới tải lên và đường dẫn ảnh cũ người dùng chọn xóa.
         $uploadedImages = $validated['images'] ?? [];
         $imagesToDelete = $validated['delete_images'] ?? [];
 
+        // Loại dữ liệu ảnh khỏi danh sách cập nhật thông tin sản phẩm thông thường.
         unset($validated['images'], $validated['delete_images']);
 
         $oldImages = $product->imagePaths();
-        $invalidImages = array_diff($imagesToDelete, $oldImages);
-
-        if ($invalidImages !== []) {
-            throw ValidationException::withMessages([
-                'delete_images' => 'Có ảnh được chọn không thuộc sản phẩm này.',
-            ]);
-        }
-
+        // Giữ ảnh cũ không được chọn xóa.
         $remainingImages = array_values(array_diff($oldImages, $imagesToDelete));
 
-        if (count($remainingImages) + count($uploadedImages) > 3) {
+        // Tổng ảnh cũ còn lại và ảnh mới không được vượt quá 5.
+        if (count($remainingImages) + count($uploadedImages) > 5) {
+            //throw ValidationException::withMessages: Nếu tổng số ảnh lớn hơn 5 thì Laravel sẽ ném ra lỗi xác thực.
             throw ValidationException::withMessages([
-                'images' => 'Tổng số ảnh của sản phẩm không được vượt quá 3.',
+                'images' => 'Tổng số ảnh của sản phẩm không được vượt quá 5.',
             ]);
         }
 
-        $newImages = $uploadedImages !== []
-            ? $this->storeImages($uploadedImages, (int) $request->user()->id)
-            : [];
+        $newImages = [];
+        if ($uploadedImages !== []) {
+            $newImages = $this->storeImages(
+                $uploadedImages,
+                (int) $request->user()->id
+            );
+        }
+
 
         $validated['image'] = array_merge($remainingImages, $newImages);
         $product->update($validated);

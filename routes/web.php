@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountProductController;
+use App\Models\Product;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -14,7 +15,11 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', function () {
-    return view('frontend.home.home');
+    $product = Product::query()
+    ->latest()
+    ->take(6)
+    ->get();
+    return view('frontend.home.home', compact('product'));
 });
 // blog routes
 Route::get('/blogs', [FrontendBlogController::class, 'index'])->name('frontend.blogs.index');

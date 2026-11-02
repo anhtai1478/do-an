@@ -9,9 +9,33 @@
 
 @section('content')
     <div class="row">
-        <div class="col-12">
-            <h3>Sản phẩm nổi bật</h3>
+        @forelse ($product as $item)
+            <div class="col-sm-4">
+                <div class="product-image-wrapper">
+                    <div class="single-products">
+                        <div class="productinfo text-center">
+                            @if ($item->primaryImage())
+                                <img src="{{ asset('storage/' . $item->primaryImage()) }}" alt="{{ $item->name }}">
+                            @endif
 
-        </div>
+                            <h2>${{ number_format((float) $item->price, 2) }}</h2>
+                            <p>{{ $item->name }}</p>
+                        </div>
+
+                        <div class="product-overlay">
+                            <div class="overlay-content">
+                                <h2>${{ number_format((float) $item->price, 2) }}</h2>
+                                <p>{{ $item->name }}</p>
+                                <button type="button" class="btn btn-default add-to-cart">
+                                    <i class="fa fa-shopping-cart"></i> Add to cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @empty
+            <p>Chưa có sản phẩm nào.</p>
+        @endforelse
     </div>
 @endsection

@@ -126,14 +126,16 @@
                 @endif
 
                 <div class="form-group">
-                    <label for="images">{{ $product->exists ? 'Replace images' : 'Images' }}</label>
+                    <label for="images">{{ $product->exists ? 'Add images' : 'Images' }}</label>
                     <input id="images" name="images[]" type="file" class="form-control"
                         accept="image/jpeg,image/png,image/webp" multiple>
                     <small class="text-muted">
-                        Chọn tối đa 5 ảnh, mỗi ảnh tối đa 2 MB.
                         @if ($product->exists)
-                            Để trống nếu muốn giữ ảnh hiện tại.
+                            Ảnh mới sẽ được thêm vào ảnh cũ chưa chọn xóa. Tổng số ảnh tối đa là 5.
+                        @else
+                            Chọn tối đa 5 ảnh.
                         @endif
+                        Mỗi ảnh tối đa 2 MB.
                     </small>
                     @error('images')
                         <div class="text-danger">{{ $message }}</div>

@@ -14,8 +14,8 @@ class UpdateProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //dữ liệu phải là một mảng; tối đa 3 đường dẫn ảnh.
-            'delete_images' => ['sometimes', 'array', 'max:3'],
+            //dữ liệu phải là một mảng; tối đa 5 đường dẫn ảnh.
+            'delete_images' => ['sometimes', 'array', 'max:5'],
             //mỗi phần tử phải là chuỗi và không được trùng nhau.
             'delete_images.*' => ['required', 'string', 'distinct'],
             'name' => ['required', 'string', 'max:255'],
