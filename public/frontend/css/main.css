@@ -1156,14 +1156,6 @@ h2.title {
 *******Product Details CSS******
 **************************/
 
-.product-details {
-    overflow: hidden;
-}
-
-#similar-product {
-    margin-top: 40px;
-}
-
 #reviews {
     padding-left: 25px;
     padding-right: 25px;
@@ -1181,8 +1173,35 @@ h2.title {
 
 .view-product img {
     border: 1px solid #F7F7F0;
-    height: 380px;
+    height: 460px;
     width: 100%;
+    object-fit: contain;
+}
+
+.view-product img.slide-next {
+    --slide-offset: 24px;
+    animation: product-image-slide 360ms ease;
+}
+
+.view-product img.slide-prev {
+    --slide-offset: -24px;
+    animation: product-image-slide 360ms ease;
+}
+
+@keyframes product-image-slide {
+    from {
+        opacity: .25;
+        transform: translateX(var(--slide-offset));
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.view-product a {
+    display: block;
 }
 
 .view-product h3 {
@@ -1198,29 +1217,98 @@ h2.title {
     right: 0;
 }
 
-#similar-product .carousel-inner .item {
-    padding-left: 0px;
+#product-thumbnails-viewport {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
 }
 
-#similar-product .carousel-inner .item img {
-    display: inline-block;
-    margin-left: 15px;
+.product-image-slider {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 20px;
 }
 
-.item-control {
-    position: absolute;
-    top: 35%;
+#product-thumbnails {
+    display: flex;
+    gap: 12px;
+    transition: transform 250ms ease;
+    width: max-content;
 }
 
-.item-control i {
+#product-thumbnails .product-thumbnail {
+    flex: 0 0 90px;
+    background: transparent;
+    border: 1px solid #F7F7F0;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+}
+
+#product-thumbnails .product-thumbnail img {
+    display: block;
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+}
+
+#product-thumbnails .product-thumbnail:hover,
+#product-thumbnails .product-thumbnail.active {
+    border-color: #FE980F;
+}
+
+.product-image-arrow {
     background: #FE980F;
+    border: 0;
     color: #FFFFFF;
+    flex: 0 0 30px;
     font-size: 20px;
-    padding: 5px 10px;
+    height: 36px;
 }
 
-.item-control i:hover {
+.product-image-arrow:hover {
     background: #ccccc6;
+}
+
+.product-image-lightbox {
+    align-items: center;
+    background: rgba(0, 0, 0, .92);
+    display: none;
+    inset: 0;
+    justify-content: center;
+    padding: 48px;
+    position: fixed;
+    z-index: 2147483646;
+}
+
+.product-image-lightbox.is-open {
+    display: flex;
+}
+
+.product-image-lightbox img {
+    display: block;
+    max-height: 90vh;
+    max-width: 92vw;
+    object-fit: contain;
+}
+
+body.product-image-lightbox-open {
+    overflow: hidden;
+}
+
+.product-image-modal-close {
+    background: transparent;
+    border: 0;
+    color: #FFFFFF;
+    font-size: 32px;
+    line-height: 1;
+    padding: 8px 14px;
+    position: fixed;
+    right: 20px;
+    top: 12px;
+    z-index: 1;
 }
 
 .product-information {

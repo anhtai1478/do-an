@@ -16,31 +16,56 @@ Auth::routes();
 
 Route::get('/', function () {
     $product = Product::query()
-    ->latest()
-    ->take(6)
-    ->get();
+        ->latest()
+        ->take(6)
+        ->get();
     return view('frontend.home.home', compact('product'));
 });
+
+
 // blog routes
-Route::get('/blogs', [FrontendBlogController::class, 'index'])->name('frontend.blogs.index');
-Route::get('/blogs/{id}', [FrontendBlogController::class, 'show'])->name('frontend.blogs.show');
+Route::get('/blogs', [FrontendBlogController::class, 'index'])
+    ->name('frontend.blogs.index');
+
+Route::get('/blogs/{id}', [FrontendBlogController::class, 'show'])
+    ->name('frontend.blogs.show');
+
+Route::get('/products/{product}', function (Product $product) {
+    return view('frontend.products.show', compact('product'));
+})->name('frontend.products.show');
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::post('/blog/rate/ajax', [FrontendBlogController::class, 'rate'])->name('frontend.blogs.rate.ajax');
-    Route::post('/blog/comment/ajax', [FrontendBlogController::class, 'comment'])->name('frontend.blogs.comment.ajax');
+    Route::post('/blog/rate/ajax', [FrontendBlogController::class, 'rate'])
+        ->name('frontend.blogs.rate.ajax');
+
+    Route::post('/blog/comment/ajax', [FrontendBlogController::class, 'comment'])
+        ->name('frontend.blogs.comment.ajax');
+
     // account
-    Route::get('/account/update', [ProfileController::class, 'edit'])->name('account.edit');
-    Route::put('account/update', [ProfileController::class, 'update'])->name('account.update');
-    Route::get('/account/my-product', [AccountProductController::class, 'index'])->name('account.my-product');
-    Route::get('/account/add-product', [AccountProductController::class, 'create'])->name('account.add-product');
-    Route::post('/account/my-product', [AccountProductController::class, 'store'])->name('account.products.store');
+    Route::get('/account/update', [ProfileController::class, 'edit'])
+        ->name('account.edit');
+
+    Route::put('/account/update', [ProfileController::class, 'update'])
+        ->name('account.update');
+
+    Route::get('/account/my-product', [AccountProductController::class, 'index'])
+        ->name('account.my-product');
+
+    Route::get('/account/add-product', [AccountProductController::class, 'create'])
+        ->name('account.add-product');
+
+    Route::post('/account/my-product', [AccountProductController::class, 'store'])
+        ->name('account.products.store');
+
     Route::get('/account/my-product/{product}/edit', [AccountProductController::class, 'edit'])
         ->whereNumber('product')
         ->name('account.products.edit');
+
     Route::put('/account/my-product/{product}', [AccountProductController::class, 'update'])
         ->whereNumber('product')
         ->name('account.products.update');
+
     Route::delete('/account/my-product/{product}', [AccountProductController::class, 'destroy'])
         ->whereNumber('product')
         ->name('account.products.destroy');

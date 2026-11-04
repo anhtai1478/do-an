@@ -22,9 +22,6 @@
     .product-information span span {
         width: 100%;
     }
-    #similar-product .carousel-inner .item img {
-        width: 65px;
-    }
     #cart_items .cart_info .cart_description h4,
     #cart_items .cart_info .cart_description p {
         text-align: center;
@@ -78,10 +75,6 @@
         display: inline-block;
         width: 40%;
     }
-    #similar-product .carousel-inner .item img {
-        width: 60px;
-        margin-left: 0;
-    }
     .product-information span span {
         display: block;
         width: 100%;
@@ -89,10 +82,6 @@
     .product-information .cart {
         margin-left: 0;
         margin-top: 15px;
-    }
-    .item-control i {
-        font-size: 12px;
-        padding: 5px 6px;
     }
     #cart_items .cart_info .cart_description h4,
     #cart_items .cart_info .cart_description p {
@@ -251,9 +240,6 @@
     .single-widget {}
     .product-information span {
         display: block;
-    }
-    #similar-product {
-        margin-bottom: 40px;
     }
     .well {
         display: inline-block;
@@ -426,9 +412,6 @@
     }
     .category-tab .nav-tabs li {
         float: none;
-    }
-    #similar-product .carousel-inner .item img {
-        margin-left: 4px;
     }
     .product-information {
         margin-top: 40px;
