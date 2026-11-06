@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\frontend\BlogController as FrontendBlogController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,33 @@ Route::get('/blogs/{id}', [FrontendBlogController::class, 'show'])
 Route::get('/products/{product}', function (Product $product) {
     return view('frontend.products.show', compact('product'));
 })->name('frontend.products.show');
+
+Route::post('/cart/add/{id}', function (Request $request, $id) {
+    $validated = $request->validate([
+        'quantity' => ['sometimes', 'integer', 'min:1', 'max:99'],
+    ]);
+
+    if (!session()->has('cart')) {
+        session()->put('cart', []);
+    }
+
+    $product = Product::findOrFail($id);
+    $quantity = $validated['quantity'] ?? 1;
+
+    session()->push('cart', [
+        'id' => $product->id,
+        'name' => $product->name,
+        'price' => $product->price,
+        'image' => $product->primaryImage(),
+        'quantity' => $quantity,
+    ]);
+
+    return response()->json([
+        'count' => array_sum(array_column(session()->get('cart'), 'quantity')),
+    ]);
+})->name('cart.add');
+
+
 
 Route::middleware(['auth'])->group(function () {
 

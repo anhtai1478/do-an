@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="cart-add-url" content="{{ route('cart.add', ['id' => '__ID__']) }}">
+
     <title>@yield('title', 'Shop Bán Hàng')</title>
 
     <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.min.css') }}">
@@ -45,6 +47,7 @@
     <script src="{{ asset('frontend/js/price-range.js') }}"></script>
     <script src="{{ asset('frontend/js/jquery.prettyPhoto.js') }}"></script>
     <script src="{{ asset('frontend/js/main.js') }}"></script>
+    <script src="{{ asset('frontend/js/product-detail.js') }}"></script>
     @yield('js')
 </body>
 </html>

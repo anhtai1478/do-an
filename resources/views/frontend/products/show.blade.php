@@ -54,6 +54,14 @@
                     </span>
                     <p><b>Danh mục:</b> {{ $product->category ?: 'Chưa cập nhật' }}</p>
                     <p><b>Thương hiệu:</b> {{ $product->brand ?: 'Chưa cập nhật' }}</p>
+                    <label for="product-quantity">Số lượng:</label>
+                    <input type="number" id="product-quantity" min="1" max="99" value="1">
+                    <button type="button" class="btn btn-default add-to-cart"
+                        data-add-to-cart
+                        data-product-id="{{ $product->id }}"
+                        data-cart-url="{{ route('cart.add', $product->id) }}">
+                        <i class="fa fa-shopping-cart"></i> Add to cart
+                    </button>
                 </div>
             </div>
         </div>
@@ -89,8 +97,4 @@
 
         </div>
     </div>
-@endsection
-
-@section('js')
-    <script src="{{ asset('frontend/js/product-detail.js') }}"></script>
 @endsection
